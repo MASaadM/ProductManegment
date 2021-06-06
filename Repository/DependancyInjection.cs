@@ -15,6 +15,8 @@ namespace ProductManegment.Repository
         {
 
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IVendorRepository, VendorRepository>();
+
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
@@ -25,6 +27,8 @@ namespace ProductManegment.Repository
         {
 
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IVendorService, VendorService>();
+
 
 
             return services;

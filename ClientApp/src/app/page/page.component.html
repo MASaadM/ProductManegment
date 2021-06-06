@@ -1,0 +1,19 @@
+<div _ngcontent-jtl-c5="" class="pagination col-md-12" style="padding:0 30px">
+  <ul _ngcontent-jtl-c5="" class="pagination">
+    <li class="page-item" [ngClass]="{ disabled: currentPage === 1 }">
+      <a class="page-link" (click)="setPage(1)">First</a>
+    </li>
+    <li class="page-item" [ngClass]="{ disabled: currentPage === 1 }">
+      <a class="page-link" (click)="setPage(currentPage - 1)">Prev</a>
+    </li>
+    <li class="page-item" *ngFor="let page of displayPager" [ngClass]="{ active: currentPage === page }">
+      <a class="page-link" (click)="setPage(page)">{{ page }}</a>
+    </li>
+    <li class="page-item" [ngClass]="{ disabled: currentPage === totalPages }">
+      <a class="page-link" (click)="setPage(currentPage + 1)">Next</a>
+    </li>
+    <li class="page-item" [ngClass]="{ disabled: currentPage === totalPages }">
+      <a class="page-link" (click)="setPage(totalPages)">Last</a>
+    </li>
+  </ul>
+</div>

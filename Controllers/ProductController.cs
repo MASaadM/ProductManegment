@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using ProductManegment.Dto;
 using ProductManegment.Repository;
+using ProductManegment.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,15 @@ namespace ProductManegment.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IProductService _pService;
 
 
 
-        public ProductController(IUnitOfWork unitOfWork)
+
+        public ProductController(IUnitOfWork unitOfWork, IProductService ps)
         {
             _unitOfWork = unitOfWork;
+            _pService = ps;
 
         }
 
@@ -27,7 +31,15 @@ namespace ProductManegment.Controllers
         [HttpGet]
         public async Task<IEnumerable<ProductDTO>> Get()
         {
-            return await _unitOfWork.Products.GetAll("");
+            try
+            {
+                var res = await _unitOfWork.Products.GetAll();
+                return res;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpGet("{id}")]
@@ -60,6 +72,17 @@ namespace ProductManegment.Controllers
             _unitOfWork.Products.Update(i);
             _unitOfWork.Complete();
             return Ok();
+        }
+        [HttpGet("GetPagedResult/{page}/{size}")]
+        public async Task<IActionResult> GetPagedResult(int page, int size)
+        {
+
+
+
+            var result = _pService.GetPagedResult(page, size);
+
+
+            return Ok(result);
         }
     }
 }

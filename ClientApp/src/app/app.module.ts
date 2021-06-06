@@ -7,16 +7,39 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+
+import { VendorsComponent } from './vendors/vendors.component';
+import { ProductsComponent } from './products/products.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddVendorComponent } from './add-vendor/add-vendor.component';
+import { UpdateVendorComponent } from './update-vendor/update-vendor.component';
+import { DeleteVendorComponent } from './delete-vendor/delete-vendor.component';
+import { AddProductComponent } from './add-product/add-product.component';
+import { UpdateProductComponent } from './update-product/update-product.component';
+import { DeleteProductComponent } from './delete-product/delete-product.component';
+import { PageComponent } from './page/page.component';
+//import { PagingComponent } from './paging/paging.component';
+//import { MatButtonModule } from '@angular/material/button';
+//import { MatCheckboxModule } from '@angular/material/checkbox';
+//import { MatTableModule, MatTableDataSource, MatTableDataSourcePageEvent,MatTableDataSourcePaginator } from '@angular/material/table';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    VendorsComponent,
+    ProductsComponent,
+    AddVendorComponent,
+    UpdateVendorComponent,
+    DeleteVendorComponent,
+    AddProductComponent,
+    UpdateProductComponent,
+    DeleteProductComponent,
+    PageComponent,
+    /*PagingComponent*/
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,9 +47,23 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ])
+      { path: 'Products', component: ProductsComponent },
+      { path: 'Vendors', component: VendorsComponent },
+      { path: 'addVendor', component: AddVendorComponent },
+      { path: 'updateVendor/:id', component: UpdateVendorComponent ,},
+      { path: 'deleteVendor/:id', component: DeleteVendorComponent },
+      { path: 'addProduct', component: AddProductComponent },
+      { path: 'updateProduct', component: UpdateProductComponent },
+      { path: 'deleteProduct', component: DeleteProductComponent },
+
+
+
+    ]),
+    BrowserAnimationsModule,
+    //MatButtonModule,
+    //MatCheckboxModule,
+    //MatTableModule,
+    //MatTableDataSource
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ProductManegment.Repository
@@ -10,5 +12,7 @@ namespace ProductManegment.Repository
         Task Add(DTO entity);
         Task Delete(int id);
         Task Update(DTO entity);
+        Task<IEnumerable<DTO>> GetAll();
+        Task<IEnumerable<DTO>> FindBy(Expression<Func<T, bool>> predicate);
     }
 }

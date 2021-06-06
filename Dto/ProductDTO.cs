@@ -17,7 +17,8 @@ namespace ProductManegment.Dto
         public bool Vegetrien { get; set; }
         public int Votes { get; set; }
         public DateTime ExpiryDate { get; set; }
- 
+        public int VendorId { get; set; }
+
 
     }
 }

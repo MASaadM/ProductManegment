@@ -73,6 +73,9 @@ namespace ProductManegment
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapControllerRoute(
+                //   name: "page",
+                //   pattern: "{controller}/{action=Index}/{page?}/{size?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");

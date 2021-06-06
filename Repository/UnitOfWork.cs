@@ -11,15 +11,19 @@ namespace ProductManegment.Repository
 
 
         public IProductRepository Products { get; }
+        public IVendorRepository Vendors { get; }
+
 
         public UnitOfWork(ProductDBContext stepperDbContext,
 
-            IProductRepository itemRepository)
+            IProductRepository itemRepository,
+            IVendorRepository vendorRepo)
         {
             this._context = stepperDbContext;
 
 
             this.Products = itemRepository;
+            this.Vendors = vendorRepo;
         }
         public async Task<int> Complete()
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProductManegment.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,5 +13,7 @@ namespace ProductManegment.Services
         Task Add(DTO entity);
         Task Delete(int id);
         Task Update(DTO entity);
+        Task<IEnumerable<DTO>> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate);
+        Task<PageResult<DTO>> GetPagedResult(int? page, int size);
     }
 }

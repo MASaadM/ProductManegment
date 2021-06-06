@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ProductManegment.Repository
 {
-    public class ProductRepository : GenericRepository<Product, ProductDTO>, IProductRepository
+    public class VendorRepository : GenericRepository<Vendor, VendorDTO>, IVendorRepository
     {
-        public ProductRepository(ProductDBContext context, IMapper mapper) : base(context, mapper)
+        public VendorRepository(ProductDBContext context, IMapper mapper) : base(context, mapper)
 
         {
 

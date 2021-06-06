@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ProductManegment.Dto;
 using ProductManegment.Repository;
 using System;
 using System.Collections.Generic;
@@ -45,6 +46,29 @@ namespace ProductManegment.Services
         {
             await _repository.Update(entity);
             await _unitOfWork.Complete();
+        }
+        public async virtual Task<IEnumerable<DTO>> GetAll()
+        {
+            return await _repository.GetAll();
+        }
+        public async virtual Task<PageResult<DTO>> GetPagedResult(int? page, int size)
+        {
+            var countDetails = _repository.GetAll().Result.Count();
+            var result = new PageResult<DTO>
+            {
+                Count = countDetails,
+                PageIndex = page ?? 1,
+                PageSize = size,
+                Items = _repository.GetAll().Result.Skip((page - 1 ?? 0) * size).Take(size).ToList()
+            };
+            return result;
+        }
+        public async virtual Task<IEnumerable<DTO>> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+
+
+            return await _repository.FindBy(predicate);
+
         }
 
     }

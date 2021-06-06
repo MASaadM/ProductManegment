@@ -19,7 +19,8 @@ namespace ProductManegment.Models
         public bool Vegetrien { get; set; }
         public int Votes { get; set; }
         public DateTime ExpiryDate { get; set; }
+        [ForeignKey("VendorId")]
         public int VendorId { get; set; }
-        public Vendor Vendor { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }

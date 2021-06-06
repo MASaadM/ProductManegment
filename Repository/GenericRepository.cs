@@ -51,5 +51,22 @@ namespace ProductManegment.Repository
         {
             _context.Set<T>().Update(_mapper.Map<T>(entity));
         }
+        public async virtual Task<IEnumerable<DTO>> GetAll()
+        {
+
+            return _mapper.Map<IEnumerable<DTO>>(await _context.Set<T>().ToListAsync());
+        }
+        //public virtual IEnumerable<PickList> GetPickList()
+        //{
+
+        //    return _dbset.AsEnumerable<T>().Select(x=>new PickList { Id=x.id});
+        //}
+        public async Task<IEnumerable<DTO>> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+
+            IEnumerable<DTO> query = _mapper.Map<IEnumerable<DTO>>(await _context.Set<T>().Where(predicate).ToListAsync()).AsEnumerable();
+            return query;
+        }
+
     }
 }
