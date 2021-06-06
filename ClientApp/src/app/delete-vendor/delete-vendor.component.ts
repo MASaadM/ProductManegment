@@ -29,7 +29,6 @@ export class DeleteVendorComponent implements OnInit {
     let x = this.url + "api/Vendor/" + this.id;
 
     this.http.delete<vendor>(x).subscribe(res => {
-    
       this.router.navigate(["/Vendors"]);
     });
   }

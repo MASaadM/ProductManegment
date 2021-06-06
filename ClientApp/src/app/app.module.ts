@@ -18,6 +18,8 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { DeleteProductComponent } from './delete-product/delete-product.component';
 import { PageComponent } from './page/page.component';
+import { TextInputComponent } from './text-input/text-input.component';
+import { DatePipe } from '@angular/common';
 //import { PagingComponent } from './paging/paging.component';
 //import { MatButtonModule } from '@angular/material/button';
 //import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -38,6 +40,7 @@ import { PageComponent } from './page/page.component';
     UpdateProductComponent,
     DeleteProductComponent,
     PageComponent,
+    TextInputComponent,
     /*PagingComponent*/
 
   ],
@@ -50,11 +53,11 @@ import { PageComponent } from './page/page.component';
       { path: 'Products', component: ProductsComponent },
       { path: 'Vendors', component: VendorsComponent },
       { path: 'addVendor', component: AddVendorComponent },
-      { path: 'updateVendor/:id', component: UpdateVendorComponent ,},
+      { path: 'updateVendor/:id', component: UpdateVendorComponent, },
       { path: 'deleteVendor/:id', component: DeleteVendorComponent },
       { path: 'addProduct', component: AddProductComponent },
-      { path: 'updateProduct', component: UpdateProductComponent },
-      { path: 'deleteProduct', component: DeleteProductComponent },
+      { path: 'updateProduct/:id', component: UpdateProductComponent },
+      { path: 'deleteProduct/:id', component: DeleteProductComponent },
 
 
 
@@ -65,7 +68,7 @@ import { PageComponent } from './page/page.component';
     //MatTableModule,
     //MatTableDataSource
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

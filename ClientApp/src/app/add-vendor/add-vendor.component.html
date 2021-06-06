@@ -3,22 +3,27 @@
     <div class="col-6 form-groub">
       <label for="name">Name</label>
       <input type="text" class="form-control" id="name"
-             required  maxlength="30"
+             required maxlength="30" minlength="2"
              [(ngModel)]="vendor.name" name="name"
              #name="ngModel">
     </div>
   </div>
   <br />
   <div class="row">
-    <div class="col-6 form-groub alert alert-danger" [hidden]="name.valid || name.pristine"
-         >
+    <div class="col-6 form-groub alert alert-danger" [hidden]="name.valid || name.pristine">
       Name is required
     </div>
   </div>
   <div class="row">
-    <div *ngIf="name.length<2 && name.length>0"
-        class="col-6 form-groub alert alert-danger">
-      Minimum length is 2
+
+    <div *ngIf="name.errors?.minlength" class="col-6 form-groub alert alert-danger">
+      Name must be at least 2 characters long.
+    </div>
+  </div>
+  <div class="row">
+
+    <div *ngIf="name.errors?.maxlength" class="col-6 form-groub alert alert-danger">
+      Name must be at least 30 characters long.
     </div>
   </div>
   <div class="row">

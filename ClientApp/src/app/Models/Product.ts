@@ -1,6 +1,12 @@
 export interface Product {
   id: string;
-  name: number;
+  title: number;
   description: number;
-  title: string;
+  price: number;
+  vegeterien: string;
+  votes: number;
+  expirydate: string;
+  vendorId: string;
+
+
 }

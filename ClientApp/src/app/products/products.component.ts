@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { Product } from '../Models/Product';
 
@@ -14,7 +15,7 @@ export class ProductsComponent {
   pageCount: number = 0;
   url: string = "";
   pager: number[] = [];
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router) {
     this.url = baseUrl;
     http.get<Product[]>(baseUrl + 'api/Product/GetPagedResult/1/' + environment.PageNumber).subscribe(result => {
 
@@ -38,6 +39,15 @@ export class ProductsComponent {
       this.products = res["result"]["items"]
 
     })
+  }
+  addProduct() {
+    this.router.navigate(["/addProduct"]);
+  }
+  updateProduct(id: number) {
+    this.router.navigate(["/updateProduct", id]);
+  }
+  deleteProduct(id: number) {
+    this.router.navigate(["/deleteProduct", id]);
   }
 }
 

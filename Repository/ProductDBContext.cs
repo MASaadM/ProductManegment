@@ -21,7 +21,9 @@ namespace ProductManegment.Repository
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<Product>()
+      .HasIndex(u => u.Title)
+      .IsUnique();
             base.OnModelCreating(modelBuilder);
 
 
