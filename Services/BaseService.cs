@@ -51,9 +51,9 @@ namespace ProductManegment.Services
         {
             return await _repository.GetAll();
         }
-        public async virtual Task<PageResult<DTO>> GetPagedResult(int? page, int size)
+        public async virtual Task<PageResult<DTO>> GetPagedResult(int? page, int size,string inc)
         {
-            var countDetails = _repository.GetAll().Result.Count();
+            var countDetails = _repository.GetAll(inc).Result.Count();
             var result = new PageResult<DTO>
             {
                 Count = countDetails,

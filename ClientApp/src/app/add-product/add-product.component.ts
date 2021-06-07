@@ -14,8 +14,10 @@ export class AddProductComponent implements OnInit {
   public vendors: vendor[];
   product: Product = {} as Product;
   url: string = "";
+  urlImage: any = null;
+  msg = "";
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private router: Router
-    , private datePipe: DatePipe  ) {
+    , private datePipe: DatePipe) {
     this.url = baseUrl;
     http.get<vendor[]>(baseUrl + 'api/Vendor').subscribe(result => {
 
@@ -27,10 +29,33 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {
   }
+  formData = new FormData();
+  public uploadFile = (files) => {
+    if (files.length === 0) {
+      this.msg = 'You must select an image';
+      this.urlImage = null;
+      return;
+    }
+    let fileToUpload = <File>files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(fileToUpload);
+
+    reader.onload = (_event) => {
+      this.msg = "";
+      this.urlImage = reader.result;
+    }
+
+    this.formData.append('file', fileToUpload, fileToUpload.name);
+
+  }
   newProduct() {
+    //let fileToUpload = <File>files[0];
+
+    this.formData.append('data', JSON.stringify(this.product));
+
     let x = this.url + "api/Product";
 
-    this.http.post<Product>(x, this.product).subscribe(res => {
+    this.http.post<Product>(x, this.formData).subscribe(res => {
 
       this.router.navigate(["/Products"]);
     });

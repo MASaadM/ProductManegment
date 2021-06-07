@@ -95,7 +95,17 @@
       </div>
     </div>
   </div>
+  <br />
+  <div class="row" style="margin-bottom:15px;">
+    <div class="col-6">
+      <label for="vegeterien">Image</label>
+      <input required class="form-control" type="file" #file placeholder="Choose Image" (change)="uploadFile(file.files)" accept="image/*">
+      <!--<button type="button" class="btn btn-success" (click)="file.click()">Upload Image</button>-->
+    </div>
 
+  </div>
+  <div [innerHtml]='msg' *ngIf="msg" style="color: red;"></div>
+  <div><img class="image" [src]="urlImage" *ngIf="urlImage"></div>
   <div class="formgroub">
     <div class="row">
       <div class="col-6 ">
@@ -163,7 +173,7 @@
   </div>
   <div class="row">
     <div class="col-6 form-groub">
-      <button [disabled]="!(title.valid && price.valid && votes.valid && expirydate.valid && vendorId.valid)" type="submit" (click)="newProduct()" class="btn-primary btn">Submit</button>
+      <button [disabled]="  !(title.valid && urlImage && price.valid && votes.valid && expirydate.valid && vendorId.valid)" type="submit" (click)="newProduct()" class="btn-primary btn">Submit</button>
     </div>
   </div>
 

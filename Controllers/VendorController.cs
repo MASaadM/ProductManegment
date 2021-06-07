@@ -79,7 +79,7 @@ namespace ProductManegment.Controllers
 
 
 
-            var result = _vendorService.GetPagedResult(page, size);
+            var result = _vendorService.GetPagedResult(page, size, "Products");
 
 
             return Ok(result);

@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Product } from '../Models/Product';
 
@@ -30,13 +32,26 @@ export class ProductsComponent {
       for (let i = 1; i <= this.Count; i++) {
         this.pager.push(i);
       }
+      this.products.forEach(prod => {
+        this.getImage(this.url + "api/Product/DownloadImage/" + prod.image).subscribe(res => {
+
+          prod.url = res;
+        });
+      });
     }, error => console.error(error));
   }
+ 
   ChangePage($event) {
     let x = this.url + "api/Product/GetPagedResult/" + $event + "/" + environment.PageNumber;
 
     this.http.get<Product[]>(x).subscribe(res => {
       this.products = res["result"]["items"]
+      this.products.forEach(prod => {
+        this.getImage(this.url + "api/Product/DownloadImage/" + prod.image).subscribe(res => {
+
+          prod.url = res;
+        });
+      });
 
     })
   }
@@ -48,6 +63,37 @@ export class ProductsComponent {
   }
   deleteProduct(id: number) {
     this.router.navigate(["/deleteProduct", id]);
+  }
+  viewImage(name: string) {
+    this.router.navigate(["/viewImage", name]);
+  }
+  getImage(url: string): Observable<string> {
+    return this.getData(url).pipe(switchMap((response) => this.readFile(response)))
+  }
+  getData(url: string): Observable<any> {
+    return this.http.get(url, this.generatedownloadHeaders());
+  }
+  public generatedownloadHeaders() {
+    const _headers = { Accept: 'application/json' };
+
+
+    return {
+      headers: new HttpHeaders(_headers),
+      responseType: 'blob' as 'json',
+    };
+  }
+  private readFile(blob: Blob): Observable<string> {
+    debugger;
+    return Observable.create((obs) => {
+      const reader = new FileReader();
+
+      reader.onerror = (err) => obs.error(err);
+      reader.onabort = (err) => obs.error(err);
+      reader.onload = () => obs.next(reader.result);
+      reader.onloadend = () => obs.complete();
+
+      return reader.readAsDataURL(blob);
+    });
   }
 }
 

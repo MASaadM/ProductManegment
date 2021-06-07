@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ProductManegment.Dto;
 using ProductManegment.Repository;
 using ProductManegment.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace ProductManegment.Controllers
@@ -33,7 +37,7 @@ namespace ProductManegment.Controllers
         {
             try
             {
-                var res = await _unitOfWork.Products.GetAll();
+                var res = await _unitOfWork.Products.GetAll("Vendor");
                 return res;
             }
             catch (Exception ex)
@@ -50,9 +54,30 @@ namespace ProductManegment.Controllers
 
         // POST api/<Books>
         [HttpPost]
-        public IActionResult Post(ProductDTO _item)
+        public async Task<IActionResult> Post()
         {
-            _unitOfWork.Products.Add(_item);
+            var folderName = Path.Combine("wwwroot", "Images");
+            var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+            var formCollection = await Request.ReadFormAsync();
+            var file = formCollection.Files.First();
+            var data = formCollection["data"];
+            var dbPath = "";
+            var fileName = "";
+            ProductDTO result = JsonConvert.DeserializeObject<ProductDTO>(data);
+            if (file.Length > 0)
+            {
+                fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+                var fullPath = Path.Combine(pathToSave, fileName);
+                dbPath = Path.Combine(folderName, fileName);
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
+            }
+            result.Image = fileName;
+
+            _unitOfWork.Products.Add(result);
             _unitOfWork.Complete();
             return Ok();
         }
@@ -79,10 +104,73 @@ namespace ProductManegment.Controllers
 
 
 
-            var result = _pService.GetPagedResult(page, size);
+            var result = _pService.GetPagedResult(page, size, "Vendor");
 
 
             return Ok(result);
         }
+        [HttpPost("upload"), DisableRequestSizeLimit]
+        public async Task<IActionResult> Upload()
+        {
+            try
+            {
+                var formCollection = await Request.ReadFormAsync();
+                var file = formCollection.Files.First();
+                var folderName = Path.Combine("wwwroot", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                if (file.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    return Ok(new { dbPath });
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
+        }
+        [HttpGet("DownloadImage/{ImageName}")]
+        public async Task<IActionResult> DownloadImage(string ImageName)
+        {
+            try
+            {
+                string initialpath = "./wwwroot/Images/";
+                var path = Path.GetFullPath(initialpath + ImageName);
+                MemoryStream memory = new MemoryStream();
+                using (FileStream stream = new FileStream(path, FileMode.Open))
+                {
+                    await stream.CopyToAsync(memory);
+                }
+                memory.Position = 0;
+                return File(memory, "image/png");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+
+        }
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/octet-stream";
+            }
+            return contentType;
+        }
+
     }
 }

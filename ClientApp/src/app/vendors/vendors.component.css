@@ -9,3 +9,7 @@
   background: transparent;
   transition: all 0.3s ease 0s;
 }
+th {
+  background-color: #04AA6D;
+  color: white;
+}

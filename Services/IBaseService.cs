@@ -14,6 +14,6 @@ namespace ProductManegment.Services
         Task Delete(int id);
         Task Update(DTO entity);
         Task<IEnumerable<DTO>> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate);
-        Task<PageResult<DTO>> GetPagedResult(int? page, int size);
+        Task<PageResult<DTO>> GetPagedResult(int? page, int size,string inc);
     }
 }

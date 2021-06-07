@@ -11,7 +11,9 @@ namespace ProductManegment.AutoMapper
         public AutoMapper()
         {
 
-            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ForMember(dest => dest.VendorName, opts => opts.MapFrom(src => src.Vendor.Name));
+            CreateMap<ProductDTO, Product>();
+
             CreateMap<Vendor, VendorDTO>().ReverseMap();
 
 

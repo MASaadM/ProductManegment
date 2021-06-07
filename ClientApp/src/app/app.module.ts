@@ -20,6 +20,7 @@ import { DeleteProductComponent } from './delete-product/delete-product.componen
 import { PageComponent } from './page/page.component';
 import { TextInputComponent } from './text-input/text-input.component';
 import { DatePipe } from '@angular/common';
+import { ViewImageComponent } from './view-image/view-image.component';
 //import { PagingComponent } from './paging/paging.component';
 //import { MatButtonModule } from '@angular/material/button';
 //import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -41,6 +42,7 @@ import { DatePipe } from '@angular/common';
     DeleteProductComponent,
     PageComponent,
     TextInputComponent,
+    ViewImageComponent,
     /*PagingComponent*/
 
   ],
@@ -58,6 +60,8 @@ import { DatePipe } from '@angular/common';
       { path: 'addProduct', component: AddProductComponent },
       { path: 'updateProduct/:id', component: UpdateProductComponent },
       { path: 'deleteProduct/:id', component: DeleteProductComponent },
+      { path: 'viewImage/:name', component: ViewImageComponent },
+
 
 
 

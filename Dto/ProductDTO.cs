@@ -28,6 +28,8 @@ namespace ProductManegment.Dto
         [DateInTheFuture]
         public DateTime Expirydate { get; set; }
         public int? VendorId { get; set; }
+        public string VendorName { get; set; }
+
 
 
     }

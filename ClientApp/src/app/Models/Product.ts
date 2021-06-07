@@ -6,7 +6,13 @@ export interface Product {
   vegeterien: string;
   votes: number;
   expirydate: string;
+  image: string;
+  url: string;
+
+
   vendorId: string;
+  vendorName: string;
+
 
 
 }

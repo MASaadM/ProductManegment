@@ -1,11 +1,11 @@
 
 
 <button class="btn btn-default" (click)="addVendor()">Create</button>
-<br/>
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="vendors">
+<br />
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="vendors.length>0">
   <thead>
     <tr>
-      <th>id</th>
+      <th>#</th>
       <th>name</th>
       <th>
       </th>
@@ -15,8 +15,8 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let vendor of vendors">
-      <td>{{ vendor.id }}</td>
+    <tr *ngFor="let vendor of vendors;let i=index">
+      <td>{{ i+1 }}</td>
       <td>{{ vendor.name }}</td>
       <td><button class="btn btn-default" (click)="updateVendor(vendor.id)">Edit</button></td>
 
@@ -26,8 +26,9 @@
     </tr>
   </tbody>
 </table>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center" *ngIf="vendors.length>0">
   <app-page [setSlic]="false" [pager]="pager" [totalPages]="pageCount" (clickSetPage)="ChangePage($event)"></app-page>
 </div>
+<p *ngIf="vendors.length<1"> No Data Found Press Create Button to create Vendors</p>
 <!--<table mat-table [dataSource]="vendors">
 </table>-->

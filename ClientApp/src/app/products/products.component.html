@@ -3,14 +3,16 @@
 <button class="btn btn-default" (click)="addProduct()">Create</button>
 <br />
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="products">
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="products.length>0">
   <thead>
     <tr>
-      <th>id</th>
+      <th>#</th>
       <th>title</th>
       <th>description</th>
       <th>price</th>
       <th>vegeterien</th>
+      <th>Image</th>
+
       <th>votes</th>
       <th>expirydate</th>
       <th>vendor</th>
@@ -21,15 +23,16 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of products">
-      <td>{{ product.id }}</td>
+    <tr *ngFor="let product of products;let i=index">
+      <td>{{ i+1 }}</td>
       <td>{{ product.title }}</td>
       <td>{{ product.description }}</td>
       <td>{{ product.price }}</td>
       <td>{{ product.vegeterien }}</td>
+      <td><img class="image" [src]="product?.url" *ngIf="product?.url" (click)="viewImage(product.url)"></td>
       <td>{{ product.votes }}</td>
       <td>{{ product.expirydate | date }}</td>
-      <td>{{ product.vendorId }}</td>
+      <td>{{ product.vendorName }}</td>
 
       <td><button class="btn btn-default" (click)="updateProduct(product.id)">Edit</button></td>
 
@@ -37,6 +40,7 @@
     </tr>
   </tbody>
 </table>
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center" *ngIf="products.length>0">
   <app-page [setSlic]="false" [pager]="pager" [totalPages]="pageCount" (clickSetPage)="ChangePage($event)"></app-page>
 </div>
+<p *ngIf="products.length<1"> No Data Found Press Create Button to create Vendors</p>

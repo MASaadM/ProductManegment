@@ -1,0 +1,6 @@
+.image {
+  max-height: 500px;
+  max-width: 800px;
+  border: solid 1px blue;
+  border-radius: 10%;
+}

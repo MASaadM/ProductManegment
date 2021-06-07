@@ -9,3 +9,15 @@
   background: transparent;
   transition: all 0.3s ease 0s;
 }
+
+.image {
+  max-height: 50px;
+  max-width: 50px;
+  border: solid 1px blue;
+  border-radius: 10%;
+}
+
+th {
+  background-color: #04AA6D;
+  color: white;
+}
